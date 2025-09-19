@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sine Wave with AudioWorklet</title>
+</head>
+<body>
+  <button id="start">Play Sine</button>
+  <script type="module">
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    // Load the worklet processor script
+    await audioCtx.audioWorklet.addModule("sine-processor.js");
+
+    const node = new AudioWorkletNode(audioCtx, "sine-processor");
+    node.connect(audioCtx.destination);
+
+    document.getElementById("start").onclick = () => {
+      audioCtx.resume();
+    };
+  </script>
+</body>
+</html>
